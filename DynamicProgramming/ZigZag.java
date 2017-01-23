@@ -57,5 +57,43 @@
 // Returns: 36
 
 public class ZigZag{
-	
+	public static int longestZigZag(int[] sequence){
+		if(sequence.length == 1) return 1;
+		if(sequence.length == 2){
+			if(sequence[0] != sequence[1]) return 2;
+			else return 1;
+		}
+		int index = sequence.length - 2;
+		while(index >= 1 && sequence[index - 1] == sequence[index]){
+			index--;
+		}
+		int[] lastsequence = new int[index+1];
+		for(int i=0;i<=index;i++){
+			lastsequence[i] = sequence[i];
+		}
+		if (index == 0){
+			if(sequence[sequence.length-1] != lastsequence[index]) return 2;
+			else return 1;
+		}
+		else{
+			// there are at least 2 elements in the lastsequence array, and the last two elements are different.
+			if((sequence[sequence.length - 1] - lastsequence[index]) * (lastsequence[index] - lastsequence[index - 1]) >= 0) return longestZigZag(lastsequence);
+			else return longestZigZag(lastsequence) + 1;
+		}
+	}
+
+	public static void main(String[] args) {
+		int[] a = new int[]{ 1, 7, 4, 9, 2, 5 };
+		int[] b = new int[]{ 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 };
+		int[] c = new int[]{ 44 };
+		int[] d = new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		int[] e = new int[]{ 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 100, 19, 7, 5, 5, 5, 1000, 32, 32 };
+		int[] f = new int[]{ 374, 40, 854, 203, 203, 156, 362, 279, 812, 955, 600, 947, 978, 46, 100, 953, 670, 862, 568, 188, 67, 669, 810, 704, 52, 861, 49, 640, 370, 908, 477, 245, 413, 109, 659, 401, 483, 308, 609, 120, 249, 22, 176, 279, 23, 22, 617, 462, 459, 244};
+		System.out.println(longestZigZag(a));
+		System.out.println(longestZigZag(b));
+		System.out.println(longestZigZag(c));
+		System.out.println(longestZigZag(d));
+		System.out.println(longestZigZag(e));
+		System.out.println(longestZigZag(f));
+ 	}
 }
